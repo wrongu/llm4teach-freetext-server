@@ -11,7 +11,7 @@ from freetext.response_stores import ResponseStore, create_response_store
 from freetext.prompt_stores import PromptStore, create_prompt_store
 from .config import ApplicationSettings
 from .feedback_providers.FeedbackProvider import FeedbackProvider
-from .feedback_providers.OpenAIFeedbackProvider import OpenAIChatBasedFeedbackProvider
+from .feedback_providers.GuidanceFeedbackProvider import GuidanceFeedbackProvider
 from .llm4text_types import (
     Assignment,
     AssignmentID,
@@ -108,7 +108,7 @@ def get_commons():
             assignment_store=create_assignment_store(config.assignment_store),
             response_store=create_response_store(config.response_store),
             feedback_providers=[
-                OpenAIChatBasedFeedbackProvider(
+                GuidanceFeedbackProvider(
                     create_prompt_store(config.prompt_store)
                 )
             ],

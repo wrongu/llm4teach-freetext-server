@@ -7,7 +7,7 @@ from ..prompt_stores import PromptStore
 from ..llm4text_types import Assignment, Feedback, Submission
 
 
-class OpenAIChatBasedFeedbackProvider(FeedbackProvider):
+class GuidanceFeedbackProvider(FeedbackProvider):
 
     """
     A feedback provider that transacts with the OpenAI API for student
@@ -41,7 +41,7 @@ class OpenAIChatBasedFeedbackProvider(FeedbackProvider):
 
         # set the default language model used to execute guidance programs
         try:
-            grader = guidance.Program(self.prompts.get_prompt("grader.feedback"))
+            grader = guidance.Program(self.prompts.get_prompt("guidance.feedback"))
 
             response = submission.submission_string
             feedback = grader(
@@ -77,7 +77,7 @@ class OpenAIChatBasedFeedbackProvider(FeedbackProvider):
 
         """
         try:
-            grader = guidance.Program(self.prompts.get_prompt("grader.draft_criteria"))
+            grader = guidance.Program(self.prompts.get_prompt("guidance.draft_criteria"))
 
             response = assignment.student_prompt
             criteria = grader(
@@ -86,7 +86,6 @@ class OpenAIChatBasedFeedbackProvider(FeedbackProvider):
                 criteria="\n".join(
                     [f"     * {f}" for f in assignment.feedback_requirements]
                 ),
-                audience_caveat="",
             )
 
             return criteria["criteria"].split("\n")
@@ -113,7 +112,7 @@ class OpenAIChatBasedFeedbackProvider(FeedbackProvider):
         """
         try:
             draft_response = guidance.Program(
-                self.prompts.get_prompt("grader.draft_response")
+                self.prompts.get_prompt("guidance.draft_response")
             )
             criteria = draft_response(prompt=assignment.student_prompt)
 
@@ -126,7 +125,7 @@ class OpenAIChatBasedFeedbackProvider(FeedbackProvider):
             )
 
             question_improver = guidance.Program(
-                self.prompts.get_prompt("grader.improve_question")
+                self.prompts.get_prompt("guidance.improve_question")
             )
 
             improved_question = question_improver(
@@ -141,5 +140,5 @@ class OpenAIChatBasedFeedbackProvider(FeedbackProvider):
 
 
 __all__ = [
-    "OpenAIChatBasedFeedbackProvider",
+    "GuidanceFeedbackProvider",
 ]
