@@ -1,0 +1,32 @@
+Students have been given the question below, delimited by <question>...</question>. A good answer should address most or all of the answer criteria delimited by the <criteria>...</criteria> tags below. An actual student's response is given between the <response>...</response> tags.
+
+<question>
+{question}
+</question>
+
+<criteria>
+{criteria}
+</criteria>
+
+<response>
+{response}
+</response>
+
+Your job is to carefully evaluate the student's response and provide your output in JSON format, matching the template delimited by the <json_template>...</json_template> tags below. Do the following:
+
+1. First, decide if the student's response indicates a good-faith attempt at answering the question. Mark this with a boolean in the "good faith" field of the output. If the student's response is not an attempt to address the question (for instance, blank, off-topic, or trying to cheat in some way), skip directly to step 4.
+
+2. Second, summarize what the student got right and what the student got wrong, according to the criteria. Put your answer as a string in the "summary of right and wrong" field of the output.
+
+3. Write a note to yourself about what fundamental concept you think the student is missing, if any. Put your answer as a string in the "missing concepts" field of the output.
+
+4. Finally, write a brief message to the student and put it in the "feedback to student" field of the output. If the student did not make a good faith effort to answer the question, simply encourage them to do so. If they need some guidance, provide some hints to move them in the right direction, but do not reveal the true answer. If their answer looks good, the feedback can simply be telling the student that they did a good job.
+
+<json_template>
+{
+	"good faith": ...,
+	"summary of right and wrong": ...,
+	"missing concepts": ...,
+	"feedback to student": ...
+}
+</json_template>
